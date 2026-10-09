@@ -1,8 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { articles, categories, type Article } from "../lib/content";
-export default function Home() {
+import { categories, type Article } from "../lib/content";
+export default function Home({ articles }: { articles: Article[] }) {
   const [category, setCategory] = useState("전체");
   const [query, setQuery] = useState("");
   const [saved, setSaved] = useState<string[]>([]);

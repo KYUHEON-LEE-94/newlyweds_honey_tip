@@ -1,7 +1,9 @@
 import type { MetadataRoute } from "next";
-import { articles } from "../lib/content";
+import { getArticles } from "../lib/articles";
 import { siteUrl, isPublicSite } from "../lib/site";
-export default function sitemap(): MetadataRoute.Sitemap {
+export const revalidate = 3600;
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const articles = await getArticles();
   return isPublicSite
     ? [
         { url: siteUrl },

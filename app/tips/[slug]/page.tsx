@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { articles } from "../../../lib/content";
+import { getArticles } from "../../../lib/articles";
 import { siteUrl } from "../../../lib/site";
-export const dynamicParams = false;
-export function generateStaticParams() {
+export const dynamicParams = true;
+export const revalidate = 3600;
+export async function generateStaticParams() {
+  const articles = await getArticles();
   return articles.map((a) => ({ slug: a.id }));
 }
 export async function generateMetadata({
@@ -13,6 +15,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
+  const articles = await getArticles();
   const a = articles.find((x) => x.id === slug);
   if (!a) return {};
   return {
@@ -36,6 +39,7 @@ export default async function TipPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
+  const articles = await getArticles();
   const a = articles.find((x) => x.id === slug);
   if (!a) notFound();
   const json = {

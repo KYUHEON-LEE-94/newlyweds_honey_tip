@@ -72,3 +72,14 @@
 - 브라우저 Vercel에는 기존 앱이 표시되어 앞선 연결 도구의 빈 목록을 확정 상태로 신뢰하지 않음.
 - Supabase 신규 화면: My Personal Project FREE, 프로젝트명 newlyweds-honey-tip, 새 테이블 자동 노출 해제, 자동 RLS 활성화.
 - DB 비밀번호 생성·입력·제출은 사용자 직접 처리 대기. 비밀번호는 수집하지 않음.
+
+### 연결 완료 및 배포 준비
+- Supabase 새 프로젝트 생성 확인: newlyweds-honey-tip (Tokyo).
+- articles / bookmarks 테이블 생성 및 RLS 적용 완료.
+- 공개 콘텐츠 8건 저장. 발행 글은 공개 읽기만 허용, 개인 보관함은 본인 행만 허용.
+- 보안 점검에서 대시보드 자동 생성 RLS 함수의 공개 실행 권한을 발견해 회수.
+- 사이트가 Supabase REST 공개 콘텐츠를 서버에서 읽도록 연결. 1시간 재검증.
+- Supabase 연결 후 production build 및 TypeScript 통과.
+- GitHub CLI 기기 인증 완료. main 브랜치 push 경로 정상 연결.
+- Vercel Hobby 프로젝트 import 화면에 Next.js와 Supabase 공개 환경변수 설정. 배포 대기.
+- 보관함 UI는 현재 브라우저 저장만 제공. DB 보관함 테이블은 후속 로그인 연동용.
