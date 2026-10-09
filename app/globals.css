@@ -895,3 +895,4 @@ footer small {
     padding: 35px 20px;
   }
 }
+.reading{max-width:820px;padding:45px 24px 70px}.reading nav{font-size:13px;margin-bottom:40px;color:var(--muted)}.reading h1{font-size:38px;line-height:1.45}.reading article{margin-bottom:55px}.reading .step p{font-size:17px;line-height:1.95}.article-title{display:block}@media(max-width:600px){.reading h1{font-size:30px}}

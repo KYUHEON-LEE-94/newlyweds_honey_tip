@@ -55,3 +55,20 @@
 - 제공된 GitHub 연결 도구에는 저장소 생성 기능 없음.
 - 브라우저에서 새 저장소 생성 페이지를 열었으나 로그인 필요.
 - 사용자에게 CLI 로그인 또는 기존 저장소 URL 요청. 인증정보는 문서에 기록하지 않음.
+
+### 공개 운영 및 SEO 요청 반영
+- 사용자가 다른 사람도 언제든 볼 수 있는 공개 사이트와 Google 등 검색 노출을 요청.
+- 글 8개의 독립 URL 및 정적 본문, canonical, Open Graph, Article JSON-LD 추가.
+- sitemap.xml / robots.txt 구현. production만 색인 허용.
+- 공유 이미지 PNG 생성. 상세 체크리스트는 SEO.md.
+- 수정 후 `npm run build` 재통과: 홈, 글 8개, robots, sitemap 생성.
+
+### 연결 경로 변경
+- 사용자가 지정한 저장소: https://github.com/KYUHEON-LEE-94/newlyweds_honey_tip
+- 저장소는 사용자 생성 공개 저장소이며 기존 파일 없음 확인.
+- 일반 git push는 터미널 인증 부재로 실패.
+- GitHub 연결 앱 create_file은 403 Resource not accessible by integration으로 실패. 원격 파일 변경 없음.
+- Vercel 연결 앱 create_project도 403으로 실패. 브라우저 연결 경로로 전환.
+- 브라우저 Vercel에는 기존 앱이 표시되어 앞선 연결 도구의 빈 목록을 확정 상태로 신뢰하지 않음.
+- Supabase 신규 화면: My Personal Project FREE, 프로젝트명 newlyweds-honey-tip, 새 테이블 자동 노출 해제, 자동 RLS 활성화.
+- DB 비밀번호 생성·입력·제출은 사용자 직접 처리 대기. 비밀번호는 수집하지 않음.
