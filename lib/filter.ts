@@ -1,6 +1,7 @@
 import type { Article } from "./content";
 export type Filters = {
   category: string;
+  topic?: string;
   region: string;
   includeNational: boolean;
   hideClosed: boolean;
@@ -23,6 +24,7 @@ export function filterArticles(articles: Article[], f: Filters) {
       a.title,
       a.summary,
       a.category,
+      a.topic || "",
       a.region,
       a.sourceName || "",
       ...a.body,
@@ -31,6 +33,7 @@ export function filterArticles(articles: Article[], f: Filters) {
       .toLocaleLowerCase("ko-KR");
     return (
       (f.category === "전체" || a.category === f.category) &&
+      (!f.topic || f.topic === "전체 주제" || a.topic === f.topic) &&
       regionMatch &&
       (!f.hideClosed || a.status !== "closed") &&
       (!f.onlySaved || f.saved.includes(a.id)) &&

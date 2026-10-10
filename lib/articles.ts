@@ -11,6 +11,7 @@ function validArticle(value: unknown): value is Article {
     /^[a-z0-9-]+$/.test(a.id) &&
     Array.isArray(a.body) &&
     a.body.every((p) => typeof p === "string") &&
+    (a.topic === undefined || typeof a.topic === "string") &&
     (a.source === undefined ||
       (typeof a.source === "string" && a.source.startsWith("https://"))) &&
     (a.sourceName === undefined || typeof a.sourceName === "string") &&
@@ -48,7 +49,7 @@ export const getArticles = cache(async (): Promise<Article[]> => {
     `${url}/rest/v1/articles?select=id,content,updated_at&published=eq.true&order=updated_at.desc,id.asc`,
     {
       headers: { apikey: key },
-      next: { revalidate: 3600 },
+      cache: "no-store",
       signal: AbortSignal.timeout(10000),
     },
   );

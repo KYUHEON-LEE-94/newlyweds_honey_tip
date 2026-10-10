@@ -9,6 +9,8 @@ export default function ArticleFacts({
   return (
     <div className={compact ? "article-facts compact" : "article-facts"}>
       <span>{a.region === "전국" ? "전국 공통" : a.region}</span>
+      {a.topic && <span>{a.topic}</span>}
+      <span>{a.source ? "공식 출처 연결 · 편집 해설" : "편집 제안"}</span>
       {a.status && (
         <span
           className={a.status === "closed" ? "status-closed" : "status-guide"}

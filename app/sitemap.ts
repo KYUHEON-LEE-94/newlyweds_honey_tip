@@ -7,6 +7,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   return isPublicSite
     ? [
         { url: siteUrl },
+        { url: `${siteUrl}/editorial-policy` },
         ...articles.map((a) => ({
           url: `${siteUrl}/tips/${a.id}`,
           ...(a.modifiedAt ? { lastModified: a.modifiedAt } : {}),

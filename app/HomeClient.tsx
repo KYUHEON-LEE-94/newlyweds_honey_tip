@@ -7,6 +7,8 @@ import PolicyChecklist from "./PolicyChecklist";
 import { categories, type Article } from "../lib/content";
 export default function Home({ articles }: { articles: Article[] }) {
   const [category, setCategory] = useState("전체");
+  const [topic, setTopic] = useState("전체 주제");
+  const topics = Array.from(new Set(articles.filter(a => category === "전체" || a.category === category).map(a => a.topic).filter((t): t is string => Boolean(t))));
   const [region, setRegion] = useState("전체 지역");
   const [includeNational, setIncludeNational] = useState(true);
   const [hideClosed, setHideClosed] = useState(false);
@@ -66,6 +68,7 @@ export default function Home({ articles }: { articles: Article[] }) {
   }
   const filtered = filterArticles(articles, {
     category,
+    topic,
     region,
     includeNational,
     hideClosed,
@@ -166,6 +169,7 @@ export default function Home({ articles }: { articles: Article[] }) {
           <button
             onClick={() => {
               setCategory("주거·지원");
+              setTopic("전체 주제");
               setOnlySaved(false);
               document
                 .getElementById("browse")
@@ -182,6 +186,7 @@ export default function Home({ articles }: { articles: Article[] }) {
           <button
             onClick={() => {
               setCategory("생활비");
+              setTopic("전체 주제");
               setOnlySaved(false);
               document
                 .getElementById("browse")
@@ -222,14 +227,16 @@ export default function Home({ articles }: { articles: Article[] }) {
                 key={c}
                 aria-pressed={c === category}
                 className={c === category ? "selected" : ""}
-                onClick={() => setCategory(c)}
+                onClick={() => { setCategory(c); setTopic("전체 주제"); }}
               >
                 {c}
               </button>
             ))}
             <span role="status">{filtered.length}개의 이야기</span>
           </div>
+          {category === "생활비" && <p className="storage-note">둘이 함께하는 재테크: 생활비 점검부터 저축·비상금과 투자 기초까지. 실행 예시는 편집 제안이며, 제도 설명은 글에 연결된 출처를 확인하세요.</p>}
           <div className="region-filters">
+            <label>세부 주제 <select aria-label="세부 주제" value={topic} onChange={e => setTopic(e.target.value)}><option>전체 주제</option>{topics.map(t => <option key={t}>{t}</option>)}</select></label>
             <label>
               관심 지역{" "}
               <select
@@ -326,6 +333,7 @@ export default function Home({ articles }: { articles: Article[] }) {
                 onClick={() => {
                   setQuery("");
                   setCategory("전체");
+                  setTopic("전체 주제");
                   setOnlySaved(false);
                   setRegion("전체 지역");
                   setHideClosed(false);
@@ -353,7 +361,8 @@ export default function Home({ articles }: { articles: Article[] }) {
       <footer>
         <b>둘의 생활</b>
         <span>두 사람이 함께 만드는, 매일의 작은 여유.</span>
-        <small>© 2026 둘의 생활 · 첫 번째 버전</small>
+        <Link href="/editorial-policy">출처·콘텐츠 운영 기준</Link>
+        <small>© 2026 둘의 생활</small>
       </footer>
       <div className="toast" role="status">
         {notice}

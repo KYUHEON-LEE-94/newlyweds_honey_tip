@@ -22,3 +22,7 @@ test('여러 검색어는 순서와 영문 대소문자에 관계없이 모두 �
 test('저장 목록과 전국 전용 필터를 동시에 적용한다',()=>{
  assert.deepEqual(filterArticles(articles,{...base,onlySaved:true,saved:['seoul-rent-interest','happy-housing-guide'],region:'전국'}).map(a=>a.id),['happy-housing-guide']);
 });
+test('세부 주제와 지역은 교집합이며 없는 주제를 추측하지 않는다',()=>{
+ assert.deepEqual(filterArticles(articles,{...base,region:'서울',topic:'전세·대출'}).map(a=>a.id),['seoul-rent-interest','jeonse-guarantee-fee']);
+ assert.equal(filterArticles(articles,{...base,topic:'없는 주제'}).length,0);
+});
