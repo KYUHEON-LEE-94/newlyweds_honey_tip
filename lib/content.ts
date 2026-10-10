@@ -1,3 +1,4 @@
+import policies from "../data/policies.json";
 export type Article = {
   id: string;
   category: string;
@@ -6,12 +7,19 @@ export type Article = {
   body: string[];
   source?: string;
   sourceName?: string;
+  checkedAt?: string;
+  modifiedAt?: string;
+  status?: "guide" | "check" | "closed";
+  applicationEnd?: string;
+  checklist?: string[];
+  relatedSource?: { label: string; url: string };
   region: string;
   tag: string;
   color: string;
 };
 export const categories = ["전체", "주거·지원", "생활비", "살림", "함께 살기"];
 export const articles: Article[] = [
+  ...(policies as Article[]),
   {
     id: "gov-benefits",
     category: "주거·지원",

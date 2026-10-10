@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import ArticleFacts from "../../ArticleFacts";
+import PolicyChecklist from "../../PolicyChecklist";
 import { notFound } from "next/navigation";
 import { getArticles } from "../../../lib/articles";
 import { siteUrl } from "../../../lib/site";
@@ -51,6 +53,7 @@ export default async function TipPage({
     author: { "@type": "Organization", name: "둘의 생활" },
     inLanguage: "ko-KR",
     articleSection: a.category,
+    ...(a.modifiedAt ? { dateModified: a.modifiedAt } : {}),
   };
   return (
     <>
@@ -70,7 +73,9 @@ export default async function TipPage({
           <div className="eyebrow">{a.category}</div>
           <h1>{a.title}</h1>
           <p className="lead">{a.summary}</p>
-          <p className="storage-note">둘의 생활 편집 노트 · 전국 공통</p>
+          <p className="storage-note">둘의 생활 편집 노트</p>
+          <ArticleFacts article={a} />
+          <PolicyChecklist article={a} />
           {a.body.map((p, i) => (
             <section className="step" key={p}>
               <span>{i + 1}</span>
@@ -95,7 +100,13 @@ export default async function TipPage({
         <section>
           <h2>함께 읽으면 좋은 이야기</h2>
           {articles
-            .filter((x) => x.id !== a.id && x.category === a.category)
+            .filter(
+              (x) =>
+                x.id !== a.id &&
+                x.category === a.category &&
+                (x.region === a.region || x.region === "전국"),
+            )
+            .slice(0, 4)
             .map((x) => (
               <p key={x.id}>
                 <Link className="official" href={`/tips/${x.id}`}>

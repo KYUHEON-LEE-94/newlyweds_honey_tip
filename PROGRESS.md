@@ -1,5 +1,13 @@
 # 둘의 생활 — 진행 기록
 
+## 현재 상태
+
+- 공개 사이트: https://newlyweds-honey-tip.vercel.app/
+- GitHub: https://github.com/KYUHEON-LEE-94/newlyweds_honey_tip
+- Vercel + Supabase 연결 및 첫 production 배포 완료.
+- 공공 API 자동수집, 계정 간 저장 동기화, Search Console 소유권 확인/색인은 후속 작업.
+- 아래 기록은 작업 경과이며 앞선 연결 오류는 해결됨.
+
 ## 2026-10-10 (Asia/Seoul)
 
 ### 합의한 방향
@@ -83,3 +91,25 @@
 - GitHub CLI 기기 인증 완료. main 브랜치 push 경로 정상 연결.
 - Vercel Hobby 프로젝트 import 화면에 Next.js와 Supabase 공개 환경변수 설정. 배포 대기.
 - 보관함 UI는 현재 브라우저 저장만 제공. DB 보관함 테이블은 후속 로그인 연동용.
+
+
+### 첫 공개 배포 검증 완료
+- 배포 커밋: 8f5af69, Vercel production READY.
+- 비로그인 HTTP 접근: 홈과 글 8개 모두 200, 없는 글 404.
+- robots.txt: Allow: /, production sitemap 주소 확인.
+- sitemap의 9개 주소와 각 canonical 일치, noindex 없음.
+- 실제 브라우저 검색, 카테고리 필터, 저장/해제, 새로고침 후 저장 유지, 개별 글 이동 확인.
+- Supabase REST: 공개 글 8건 조회 200, 익명 개인 보관함 조회 401.
+- RLS: 임시 비공개 콘텐츠를 트랜잭션 내 생성해 익명에게 숨겨짐 확인 후 롤백.
+- Supabase security advisors: 경고 0개.
+
+### 2차 — 지역 정책 확장
+- 사용자의 다음 작업 요청에 따라 전국·서울·경기·인천·부산 정책 안내 6건 추가. 총 14건.
+- 공식 출처와 확인 범위를 SOURCES.md에 기록. 직접 요청 실패 시 공식 페이지 검색 색인으로 보완한 점 명시.
+- 인천 해당 회차의 2026-05-15 접수 종료를 명시하고 종료 배지 제공.
+- 지역 선택, 전국 공통 포함, 종료 모집 숨김 기능 추가.
+- 다중 검색어 AND 검색 및 영문 대소문자 무시.
+- 글과 카드에 지역·출처 확인일·접수 상태, 상세에 준비 항목 추가.
+- 신규 정책 JSON을 Supabase에 반영. 콘텐츠 수정 시각을 출처 확인일과 분리.
+- `npm test`: 필터 조합 5개 통과. `npm run build`: 전체 글 14개 생성 성공.
+- 공개 사이트 2차 배포 및 최종 검증 진행 중.

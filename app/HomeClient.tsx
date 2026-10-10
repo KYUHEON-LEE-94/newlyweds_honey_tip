@@ -1,9 +1,22 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { filterArticles } from "../lib/filter";
+import ArticleFacts from "./ArticleFacts";
+import PolicyChecklist from "./PolicyChecklist";
 import { categories, type Article } from "../lib/content";
 export default function Home({ articles }: { articles: Article[] }) {
   const [category, setCategory] = useState("전체");
+  const [region, setRegion] = useState("전체 지역");
+  const [includeNational, setIncludeNational] = useState(true);
+  const [hideClosed, setHideClosed] = useState(false);
+  const regions = [
+    "전체 지역",
+    "전국",
+    ...Array.from(
+      new Set(articles.map((a) => a.region).filter((r) => r !== "전국")),
+    ).sort(),
+  ];
   const [query, setQuery] = useState("");
   const [saved, setSaved] = useState<string[]>([]);
   const [onlySaved, setOnlySaved] = useState(false);
@@ -51,14 +64,15 @@ export default function Home({ articles }: { articles: Article[] }) {
       setNotice("저장하지 못했어요. 브라우저 저장 공간을 확인해 주세요.");
     }
   }
-  const filtered = articles.filter(
-    (a) =>
-      (category === "전체" || a.category === category) &&
-      (!onlySaved || saved.includes(a.id)) &&
-      `${a.title} ${a.summary} ${a.category} ${a.body.join(" ")}`.includes(
-        query.trim(),
-      ),
-  );
+  const filtered = filterArticles(articles, {
+    category,
+    region,
+    includeNational,
+    hideClosed,
+    query,
+    onlySaved,
+    saved,
+  });
   return (
     <>
       <header>
@@ -213,7 +227,40 @@ export default function Home({ articles }: { articles: Article[] }) {
                 {c}
               </button>
             ))}
-            <span>{filtered.length}개의 이야기 · 전국 공통</span>
+            <span role="status">{filtered.length}개의 이야기</span>
+          </div>
+          <div className="region-filters">
+            <label>
+              관심 지역{" "}
+              <select
+                aria-label="관심 지역"
+                value={region}
+                onChange={(e) => setRegion(e.target.value)}
+              >
+                {regions.map((r) => (
+                  <option key={r} value={r}>
+                    {r === "전국" ? "전국 공통" : r}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                checked={includeNational}
+                onChange={(e) => setIncludeNational(e.target.checked)}
+                disabled={region === "전체 지역" || region === "전국"}
+              />{" "}
+              전국 공통 정보 함께 보기
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                checked={hideClosed}
+                onChange={(e) => setHideClosed(e.target.checked)}
+              />{" "}
+              종료된 모집 숨기기
+            </label>
           </div>
           {onlySaved && (
             <p className="storage-note">
@@ -247,6 +294,7 @@ export default function Home({ articles }: { articles: Article[] }) {
                 </div>
                 <div className="card-body">
                   <div className="card-tag">{a.tag}</div>
+                  <ArticleFacts article={a} compact />
                   <Link className="article-title" href={`/tips/${a.id}`}>
                     <h3>{a.title}</h3>
                   </Link>
@@ -279,6 +327,8 @@ export default function Home({ articles }: { articles: Article[] }) {
                   setQuery("");
                   setCategory("전체");
                   setOnlySaved(false);
+                  setRegion("전체 지역");
+                  setHideClosed(false);
                 }}
               >
                 모든 이야기 보기
@@ -291,7 +341,7 @@ export default function Home({ articles }: { articles: Article[] }) {
           <div>
             <h3>지원 정보의 마지막 확인은 공식 사이트에서</h3>
             <p>
-              지금은 공식 사이트 길잡이를 제공합니다. 실시간 공고·지원금 자동
+              공식 출처를 확인해 정보를 정리합니다. 실시간 공고·지원금 자동
               수집은 연결 준비 중입니다.
             </p>
           </div>
@@ -345,6 +395,8 @@ export default function Home({ articles }: { articles: Article[] }) {
             <div className="eyebrow">{selected.category}</div>
             <h2 id="detail-title">{selected.title}</h2>
             <p className="lead">{selected.summary}</p>
+            <ArticleFacts article={selected} />
+            <PolicyChecklist article={selected} />
             {selected.body.map((p, i) => (
               <div className="step" key={p}>
                 <span>{i + 1}</span>

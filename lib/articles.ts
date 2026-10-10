@@ -13,7 +13,27 @@ function validArticle(value: unknown): value is Article {
     a.body.every((p) => typeof p === "string") &&
     (a.source === undefined ||
       (typeof a.source === "string" && a.source.startsWith("https://"))) &&
-    (a.sourceName === undefined || typeof a.sourceName === "string")
+    (a.sourceName === undefined || typeof a.sourceName === "string") &&
+    (a.checkedAt === undefined ||
+      (typeof a.checkedAt === "string" &&
+        /^\d{4}-\d{2}-\d{2}$/.test(a.checkedAt))) &&
+    (a.status === undefined ||
+      ["guide", "check", "closed"].includes(String(a.status))) &&
+    (a.applicationEnd === undefined ||
+      (typeof a.applicationEnd === "string" &&
+        /^\d{4}-\d{2}-\d{2}$/.test(a.applicationEnd))) &&
+    (a.checklist === undefined ||
+      (Array.isArray(a.checklist) &&
+        a.checklist.every((x) => typeof x === "string"))) &&
+    (a.relatedSource === undefined ||
+      (a.relatedSource !== null &&
+        typeof a.relatedSource === "object" &&
+        typeof (a.relatedSource as Record<string, unknown>).label ===
+          "string" &&
+        typeof (a.relatedSource as Record<string, unknown>).url === "string" &&
+        String((a.relatedSource as Record<string, unknown>).url).startsWith(
+          "https://",
+        )))
   );
 }
 export const getArticles = cache(async (): Promise<Article[]> => {
@@ -25,7 +45,7 @@ export const getArticles = cache(async (): Promise<Article[]> => {
     return initialArticles;
   }
   const response = await fetch(
-    `${url}/rest/v1/articles?select=id,content&published=eq.true&order=id.asc`,
+    `${url}/rest/v1/articles?select=id,content,updated_at&published=eq.true&order=updated_at.desc,id.asc`,
     {
       headers: { apikey: key },
       next: { revalidate: 3600 },
@@ -37,6 +57,6 @@ export const getArticles = cache(async (): Promise<Article[]> => {
   const rows: unknown = await response.json();
   if (!Array.isArray(rows)) throw new Error("Invalid content response");
   return rows
-    .map((row) => ({ ...row.content, id: row.id }))
+    .map((row) => ({ ...row.content, id: row.id, modifiedAt: row.updated_at }))
     .filter(validArticle);
 });
