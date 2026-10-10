@@ -1,3 +1,4 @@
+import housing from "../data/housing.json";
 import editorial from "../data/editorial.json";
 import finance from "../data/finance.json";
 import policies from "../data/policies.json";
@@ -20,5 +21,5 @@ export type Article = {
   tag: string;
   color: string;
 };
-export const categories = ["전체", "주거·지원", "생활비", "살림", "함께 살기"];
-export const articles: Article[] = [...(policies as Article[]), ...(finance as Article[]), ...(editorial as Article[])];
+export const categories = ["전체", "청약", "주거·지원", "생활비", "살림", "함께 살기"];
+export const articles: Article[] = [...(housing as Article[]), ...(policies as Article[]), ...(finance as Article[]), ...(editorial as Article[])];

@@ -21,3 +21,9 @@
 - 금융위원회: https://www.fsc.go.kr/po010101/86973 — 2026-05-26 단일종목 레버리지 투자 위험 안내. 편입 자산 비교·부부 합의 방법은 자체 편집 제안.
 - 공식 YouTube https://www.youtube.com/@FSCKorea — 위 금융위원회 원문 내 공식 링크로 계정 연결 확인. 특정 영상 사실 검증이나 자동 수집은 하지 않음.
 - 품질/갱신/후속 조건 모델: CONTENT_POLICY.md. 현재 개인별 소득·자산 판정은 미구현.
+
+## 청약 / 2026-10-10
+
+- 국가법령정보센터 https://www.law.go.kr/LSW/admRulInfoP.do?admRulSeq=2100000282334&chrClsCd=010201 — 운용지침 제목·2026-07-08 시행 확인. 조문 전체가 웹 추출되지 않아 구체적 소득·혼인 기준을 단정하지 않음.
+- LH https://apply.lh.or.kr/lhapply/cm/cntnts/cntntsView.do?cntntsId=1132&mi=1243 — 신혼희망타운 대상과 조건 항목·전용 대출 조건 확인. 과거 연도 표가 혼재하므로 수치를 현재 공통 기준으로 게시하지 않음.
+- LH https://apply.lh.or.kr/lhapply/cm/cntnts/cntntsView.do?cntntsId=1234&mi=1306 — 분양주택 청약 연습 안내. 실제 모집 목록/개인 자격 심사와 구분.

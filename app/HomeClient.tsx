@@ -234,6 +234,7 @@ export default function Home({ articles }: { articles: Article[] }) {
             ))}
             <span role="status">{filtered.length}개의 이야기</span>
           </div>
+          {category === "청약" && <p className="storage-note">신혼부부 특별공급 · 공공분양 · 신혼희망타운 · 청약 준비. 제도 안내이며 현재 모집 단지의 실시간 목록은 아닙니다. 신청 조건과 일정은 각 모집공고 원문을 확인하세요.</p>}
           {category === "생활비" && <p className="storage-note">둘이 함께하는 재테크: 생활비 점검부터 저축·비상금과 투자 기초까지. 실행 예시는 편집 제안이며, 제도 설명은 글에 연결된 출처를 확인하세요.</p>}
           <div className="region-filters">
             <label>세부 주제 <select aria-label="세부 주제" value={topic} onChange={e => setTopic(e.target.value)}><option>전체 주제</option>{topics.map(t => <option key={t}>{t}</option>)}</select></label>
@@ -281,7 +282,7 @@ export default function Home({ articles }: { articles: Article[] }) {
                 <div className={`cover ${a.color}`}>
                   <span>{a.category}</span>
                   <div className="cover-glyph" aria-hidden="true">
-                    {a.category === "주거·지원"
+                    {(a.category === "주거·지원" || a.category === "청약")
                       ? "⌂"
                       : a.category === "생활비"
                         ? "₩"

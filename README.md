@@ -41,9 +41,9 @@ GitHub 저장소를 Vercel에 import하고 Framework를 Next.js로 지정합니�
 
 ## 콘텐츠와 정책 상태
 
-총 16개 글 중 신규 정책 안내 6건은 출처 확인일, 지역, 접수 상태와 확인 항목을 제공합니다. 지역 선택 시 전국 공통 정보 포함 여부와 종료 모집 숨김을 선택할 수 있습니다. 출처는 [SOURCES.md](./SOURCES.md), SEO 운영은 [SEO.md](./SEO.md)를 참고하세요.
+총 19개 글 중 신규 정책 안내 6건은 출처 확인일, 지역, 접수 상태와 확인 항목을 제공합니다. 지역 선택 시 전국 공통 정보 포함 여부와 종료 모집 숨김을 선택할 수 있습니다. 출처는 [SOURCES.md](./SOURCES.md), SEO 운영은 [SEO.md](./SEO.md)를 참고하세요.
 
-정책 데이터 원본은 `data/policies.json`이며 현재 Supabase에 같은 내용을 반영했습니다. JSON만 변경하면 운영 DB가 자동 변경되지는 않습니다. 발행 전 검토 후 DB에 반영해야 합니다. 본문 데이터는 캐시하지 않고 서버에서 조회합니다. 데이터 원본은 data/policies.json, data/finance.json, data/editorial.json입니다.
+정책 데이터 원본은 `data/policies.json`이며 현재 Supabase에 같은 내용을 반영했습니다. JSON만 변경하면 운영 DB가 자동 변경되지는 않습니다. 발행 전 검토 후 DB에 반영해야 합니다. 본문 데이터는 캐시하지 않고 서버에서 조회합니다. 데이터 원본은 data/policies.json, data/finance.json, data/editorial.json, data/housing.json입니다.
 
 콘텐츠 검증 및 매일 09:00 정기 점검 기준은 [CONTENT_POLICY.md](./CONTENT_POLICY.md)를 참고하세요.
 
