@@ -28,7 +28,7 @@ export default function ArticleFacts({
         </span>
       )}
       {!compact && a.applicationEnd && (
-        <span>해당 회차 접수 마감 {a.applicationEnd}</span>
+        <span>해당 회차 접수 마감 <strong className="important-date"><time dateTime={a.applicationEnd}>{a.applicationEnd}</time></strong></span>
       )}
     </div>
   );

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import ArticleFacts from "../../ArticleFacts";
+import ArticleBody, { ReadableText } from "../../ArticleBody";
 import PolicyChecklist from "../../PolicyChecklist";
 import { notFound } from "next/navigation";
 import { getArticles } from "../../../lib/articles";
@@ -72,16 +73,11 @@ export default async function TipPage({
         <article>
           <div className="eyebrow">{a.category}</div>
           <h1>{a.title}</h1>
-          <p className="lead">{a.summary}</p>
+          <p className="lead article-summary"><ReadableText text={a.summary} /></p>
           <p className="storage-note">둘의 생활 편집 노트</p>
           <ArticleFacts article={a} />
           <PolicyChecklist article={a} />
-          {a.body.map((p, i) => (
-            <section className="step" key={p}>
-              <span>{i + 1}</span>
-              <p>{p}</p>
-            </section>
-          ))}
+          <ArticleBody article={a} headingLevel={2} />
           {a.source && (
             <a
               className="official"

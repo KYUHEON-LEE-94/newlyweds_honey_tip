@@ -1017,3 +1017,67 @@ footer small {
     font-size: 11px;
   }
 }
+
+.search-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin: 16px 0 28px; }
+.search-actions .primary { margin: 0; padding: 12px 30px; }
+.reset-search { padding: 12px 16px; border: 1px solid #d7ddd3; border-radius: 6px; background: transparent; cursor: pointer; }
+.search-actions p { color: #697466; font-size: 13px; margin: 0; }
+@media (max-width: 600px) { .search-actions p { flex-basis: 100%; } }
+
+/* Shared reading layout for every article and its quick-read dialog. */
+.article-summary {
+  padding: 18px 22px;
+  border-left: 3px solid var(--green);
+  background: #f1f4eb;
+  border-radius: 0 10px 10px 0;
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1.85;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+.article-body { margin: 32px 0; }
+.reading-section { padding: 26px 0; border-top: 1px solid var(--line); }
+.reading-section :is(h2, h3) {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin: 0 0 16px;
+  font-size: 20px;
+  line-height: 1.55;
+  letter-spacing: -.025em;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+.section-number { flex-shrink: 0; color: var(--green); font-size: 13px; font-weight: 700; }
+.reading-section p {
+  margin: 0 0 14px;
+  color: #354037;
+  font-size: 17px;
+  line-height: 1.95;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+.reading-section p:last-child { margin-bottom: 0; }
+.article-body strong, .article-summary strong, .policy-checklist strong { color: #203d2c; font-weight: 750; }
+.important-date {
+  text-decoration-line: underline;
+  text-decoration-color: #819866;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+.policy-checklist li { line-height: 1.85; margin-bottom: 8px; font-size: 15px; }
+.reading .official, .modal .official { font-size: 15px; line-height: 1.75; overflow-wrap: anywhere; }
+@media (max-width: 600px) {
+  .reading { padding-inline: 20px; }
+  .reading-section { padding: 22px 0; }
+  .reading-section :is(h2, h3) { font-size: 18px; gap: 9px; }
+  .reading-section p { font-size: 16px; line-height: 1.9; }
+  .article-summary { font-size: 15px; padding: 15px 17px; }
+}
+.article-glossary { padding: 22px; background: #f2f4ee; border-radius: 12px; margin-top: 24px; }
+.article-glossary :is(h2, h3) { font-size: 18px; margin: 0 0 16px; }
+.article-glossary dl { margin: 0; }
+.article-glossary dl > div + div { margin-top: 15px; }
+.article-glossary dt { font-weight: 700; font-size: 15px; color: #203d2c; }
+.article-glossary dd { margin: 4px 0 0; font-size: 14px; line-height: 1.85; color: #465047; word-break: keep-all; overflow-wrap: anywhere; }

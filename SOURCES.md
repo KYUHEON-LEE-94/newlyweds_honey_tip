@@ -27,3 +27,10 @@
 - 국가법령정보센터 https://www.law.go.kr/LSW/admRulInfoP.do?admRulSeq=2100000282334&chrClsCd=010201 — 운용지침 제목·2026-07-08 시행 확인. 조문 전체가 웹 추출되지 않아 구체적 소득·혼인 기준을 단정하지 않음.
 - LH https://apply.lh.or.kr/lhapply/cm/cntnts/cntntsView.do?cntntsId=1132&mi=1243 — 신혼희망타운 대상과 조건 항목·전용 대출 조건 확인. 과거 연도 표가 혼재하므로 수치를 현재 공통 기준으로 게시하지 않음.
 - LH https://apply.lh.or.kr/lhapply/cm/cntnts/cntntsView.do?cntntsId=1234&mi=1306 — 분양주택 청약 연습 안내. 실제 모집 목록/개인 자격 심사와 구분.
+
+## 신혼부부 대출 / 2026-10-10
+
+- 전세자금: https://nhuf.molit.go.kr/FP/FP05/FP0502/FP05020401.jsp — 공식 브라우저 본문에서 소득·2026 순자산·혼인·무주택·보증금·한도·표시 금리 확인. 웹 추출 시간 초과와 실제 브라우저 확인을 구분했다.
+- 구입자금: https://nhuf.molit.go.kr/FP/FP05/FP0503/FP05030601.jsp — 이번 브라우저 확인으로 기존 조사 문서의 상세 미확인 상태 해소. 소득 8,500만원·순자산 5.11억원·생애최초·평가액 6억원·일반 한도 3.2억원·지역별 LTV·DTI·표시 금리 확인. 계약 시기·토지임대부 등 예외를 공통 조건으로 일반화하지 않는다.
+- 조건 탐색: https://www.hf.go.kr/ko/sub01/sub01_04.do — 공식 주택담보대출 찾기 질문 항목 확인. 보조 링크 https://www.hf.go.kr/ko/sub02/sub02_01_01.do 는 공식 전세자금보증 찾기.
+- 대출 글 3개는 `data/loans.json`. 계산 예시·상담 준비표는 편집 제안으로 표시. 공식 기관 인증이나 승인 보장이 아니다.

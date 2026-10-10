@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { filterArticles } from "../lib/filter";
 import ArticleFacts from "./ArticleFacts";
+import ArticleBody, { ReadableText } from "./ArticleBody";
 import PolicyChecklist from "./PolicyChecklist";
 import { categories, type Article } from "../lib/content";
 export default function Home({ articles }: { articles: Article[] }) {
@@ -20,6 +21,17 @@ export default function Home({ articles }: { articles: Article[] }) {
     ).sort(),
   ];
   const [query, setQuery] = useState("");
+  const [applied, setApplied] = useState({topic: "전체 주제", region: "전체 지역", includeNational: true, hideClosed: false, query: ""});
+  const pending = topic !== applied.topic || region !== applied.region || includeNational !== applied.includeNational || hideClosed !== applied.hideClosed || query !== applied.query;
+  function chooseCategory(value: string) {
+    setCategory(value);
+    setTopic("전체 주제");
+    setApplied(previous => ({...previous, topic: "전체 주제"}));
+  }
+  function resetSearch() {
+    setTopic("전체 주제"); setRegion("전체 지역"); setIncludeNational(true); setHideClosed(false); setQuery("");
+    setApplied({topic: "전체 주제", region: "전체 지역", includeNational: true, hideClosed: false, query: ""});
+  }
   const [saved, setSaved] = useState<string[]>([]);
   const [onlySaved, setOnlySaved] = useState(false);
   const [selected, setSelected] = useState<Article | null>(null);
@@ -68,11 +80,7 @@ export default function Home({ articles }: { articles: Article[] }) {
   }
   const filtered = filterArticles(articles, {
     category,
-    topic,
-    region,
-    includeNational,
-    hideClosed,
-    query,
+    ...applied,
     onlySaved,
     saved,
   });
@@ -168,8 +176,7 @@ export default function Home({ articles }: { articles: Article[] }) {
           </div>
           <button
             onClick={() => {
-              setCategory("주거·지원");
-              setTopic("전체 주제");
+              chooseCategory("주거·지원");
               setOnlySaved(false);
               document
                 .getElementById("browse")
@@ -185,8 +192,7 @@ export default function Home({ articles }: { articles: Article[] }) {
           </button>
           <button
             onClick={() => {
-              setCategory("생활비");
-              setTopic("전체 주제");
+              chooseCategory("생활비");
               setOnlySaved(false);
               document
                 .getElementById("browse")
@@ -202,6 +208,11 @@ export default function Home({ articles }: { articles: Article[] }) {
           </button>
         </section>
         <section id="browse">
+          <form role="search" aria-label="생활 정보 조건 검색" onSubmit={e => {
+            e.preventDefault();
+            setApplied({topic, region, includeNational, hideClosed, query});
+            setNotice("선택한 조건으로 검색했어요.");
+          }}>
           <div className="section-heading">
             <div>
               <div className="eyebrow">LIFE, TOGETHER</div>
@@ -225,9 +236,10 @@ export default function Home({ articles }: { articles: Article[] }) {
             {categories.map((c) => (
               <button
                 key={c}
+                type="button"
                 aria-pressed={c === category}
                 className={c === category ? "selected" : ""}
-                onClick={() => { setCategory(c); setTopic("전체 주제"); }}
+                onClick={() => chooseCategory(c)}
               >
                 {c}
               </button>
@@ -270,6 +282,12 @@ export default function Home({ articles }: { articles: Article[] }) {
               종료된 모집 숨기기
             </label>
           </div>
+          <div className="search-actions">
+            <button className="primary" type="submit">검색</button>
+            <button className="reset-search" type="button" onClick={resetSearch}>조건 초기화</button>
+            <p role="status">{pending ? "조건이 변경됐어요. 검색 버튼을 눌러 적용하세요." : "선택한 조건의 검색 결과입니다."}</p>
+          </div>
+          </form>
           {onlySaved && (
             <p className="storage-note">
               보관함은 현재 브라우저에 저장됩니다. 기기 간 동기화는 아직
@@ -332,9 +350,8 @@ export default function Home({ articles }: { articles: Article[] }) {
               </p>
               <button
                 onClick={() => {
-                  setQuery("");
+                  resetSearch();
                   setCategory("전체");
-                  setTopic("전체 주제");
                   setOnlySaved(false);
                   setRegion("전체 지역");
                   setHideClosed(false);
@@ -404,15 +421,10 @@ export default function Home({ articles }: { articles: Article[] }) {
             </button>
             <div className="eyebrow">{selected.category}</div>
             <h2 id="detail-title">{selected.title}</h2>
-            <p className="lead">{selected.summary}</p>
+            <p className="lead article-summary"><ReadableText text={selected.summary} /></p>
             <ArticleFacts article={selected} />
             <PolicyChecklist article={selected} />
-            {selected.body.map((p, i) => (
-              <div className="step" key={p}>
-                <span>{i + 1}</span>
-                <p>{p}</p>
-              </div>
-            ))}
+            <ArticleBody article={selected} />
             {selected.source && (
               <a
                 className="official"

@@ -1,10 +1,11 @@
+import { ReadableText } from "./ArticleBody";
 import type { Article } from "../lib/content";
 export default function PolicyChecklist({ article: a }: { article: Article }) {
   return (
     <>
       {a.status === "closed" && (
         <p className="closed-notice">
-          이 글에서 안내하는 모집은 종료되었습니다. 다음 모집은 공식 기관의 새
+          <strong>이 글에서 안내하는 모집은 종료되었습니다.</strong> 다음 모집은 공식 기관의 새
           공고를 확인해 주세요.
         </p>
       )}
@@ -13,7 +14,7 @@ export default function PolicyChecklist({ article: a }: { article: Article }) {
           <h3>확인할 항목</h3>
           <ul>
             {a.checklist.map((item) => (
-              <li key={item}>{item}</li>
+              <li key={item}><ReadableText text={item} /></li>
             ))}
           </ul>
         </aside>
